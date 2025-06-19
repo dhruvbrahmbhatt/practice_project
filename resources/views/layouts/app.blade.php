@@ -12,6 +12,14 @@
             rel="stylesheet"
         />
         <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/emoji-button.min.js"></script>
+
+        <style>
+            .nav-link.active {
+                background-color: #0d6efd;
+                color: #fff !important;
+                border-radius: 5px;
+            }
+        </style>
     </head>
     <body>
         <div class="d-flex">
@@ -24,17 +32,44 @@
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
                         <a
-                            class="nav-link text-white"
+                            class="nav-link text-white {{ request()->routeIs('dashboard') ? 'active fw-bold' : '' }}"
                             href="{{ route('dashboard') }}"
-                            >Dashboard</a
                         >
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white {{ request()->routeIs('profile.edit') ? 'active fw-bold' : '' }}"
+                            href="{{ route('profile.edit') }}"
+                        >
+                            Edit Profile
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white {{ request()->is('change-password') ? 'active fw-bold' : '' }}"
+                            href="#change-password"
+                        >
+                            Change Password
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white {{ request()->routeIs('projects.*') ? 'active fw-bold' : '' }}"
+                            href="{{ route('projects.index') }}"
+                        >
+                            Projects
+                        </a>
                     </li>
                     @php $unreadCount = \App\Models\Message::where('to_user_id',
                     auth()->id()) ->whereNull('read_at') ->count(); @endphp
-                    <li>
+                    <li class="nav-item mb-2">
                         <a
                             href="{{ route('chat.index') }}"
-                            class="nav-link text-white"
+                            class="nav-link text-white {{ request()->routeIs('chat.index') ? 'active fw-bold' : '' }}"
                         >
                             Chat @if($unreadCount > 0)
                             <span class="badge bg-danger">{{
@@ -45,16 +80,13 @@
                     </li>
                     <li class="nav-item mb-2">
                         <a
-                            class="nav-link text-white"
-                            href="{{ route('profile.edit') }}"
-                            >Edit Profile</a
+                            class="nav-link text-white {{ request()->routeIs('group.index') ? 'active fw-bold' : '' }}"
+                            href="{{ route('group.index') }}"
                         >
+                            <i class="bi bi-people"></i> Group Chat
+                        </a>
                     </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-white" href="#change-password"
-                            >Change Password</a
-                        >
-                    </li>
+
                     <li class="nav-item mt-4">
                         <a
                             class="nav-link text-white"
@@ -80,4 +112,5 @@
         </div>
     </body>
 </html>
+
 @yield('scripts')
