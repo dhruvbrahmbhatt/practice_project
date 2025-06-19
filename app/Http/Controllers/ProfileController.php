@@ -6,8 +6,10 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Throwable;
 
 class ProfileController extends Controller
 {
@@ -24,17 +26,26 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        try {
+            $user = Auth::user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            $request->validate([
+                'name'  => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+            ]);
+
+            $user->update($request->only('name', 'email'));
+
+            return redirect()->route('dashboard')->with('success', 'Profile updated successfully!');
+        } catch (Throwable $error) {
+            Log::error('Profile update failed: ' . $error->getMessage());
+
+            return back()->withErrors([
+                'update_error' => 'Something went wrong. Please try again.',
+            ]);
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

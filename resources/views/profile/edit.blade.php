@@ -1,29 +1,45 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app') @section('title', 'Edit Profile') @section('content')
+<div class="container mt-4">
+    <h3>Edit Profile</h3>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+    {{-- Success Message --}}
+    @if(session('success'))
+    <div class="alert alert-success">{{ session("success") }}</div>
+    @endif
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+    {{-- Error Message --}}
+    @if($errors->has('update_error'))
+    <div class="alert alert-danger">{{ $errors->first('update_error') }}</div>
+    @endif
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+    <form method="POST" action="{{ route('profile.update') }}">
+        @csrf
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input
+                type="text"
+                name="name"
+                value="{{ old('name', $user->name) }}"
+                class="form-control"
+            />
+            @error('name')
+            <small class="text-danger">{{ $message }}</small> @enderror
         </div>
-    </div>
-</x-app-layout>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input
+                type="email"
+                name="email"
+                value="{{ old('email', $user->email) }}"
+                class="form-control"
+            />
+            @error('email')
+            <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+@endsection

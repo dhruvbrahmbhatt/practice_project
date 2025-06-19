@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Update Profile</h5>
                     <a
-                        href="{{ route('edit') }}"
+                        href="{{ route('profile.edit') }}"
                         class="btn btn-outline-primary btn-sm"
                         >Edit</a
                     >
@@ -43,7 +43,9 @@
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Change Password</h5>
-                    <a href="#" class="btn btn-outline-secondary btn-sm"
+                    <a
+                        href="{{ route('profile.edit') }}"
+                        class="btn btn-outline-secondary btn-sm"
                         >Change</a
                     >
                 </div>
