@@ -13,11 +13,17 @@ class Message extends Model
         'from_user_id',
         'to_user_id',
         'message',
-        'image'
+        'image',
+        'group_id'
     ];
 
     public function isUnread()
     {
         return is_null($this->read_at);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 }
