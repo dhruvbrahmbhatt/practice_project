@@ -28,7 +28,7 @@
                 class="bg-dark text-white p-3"
                 style="width: 220px; min-height: 100vh"
             >
-                <h5 class="mb-4">MyApp</h5>
+                <h5 class="mb-4">PMS</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
                         <a
@@ -64,8 +64,18 @@
                             Projects
                         </a>
                     </li>
-                    @php $unreadCount = \App\Models\Message::where('to_user_id',
-                    auth()->id()) ->whereNull('read_at') ->count(); @endphp
+                    @isset($project)
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white {{ request()->routeIs('projects.kanban') ? 'active bg-primary' : '' }}"
+                            href="{{ route('projects.kanban', $project->id ?? 1) }}"
+                        >
+                            🧩 Kanban Board
+                        </a>
+                    </li>
+                    @endisset @php $unreadCount =
+                    \App\Models\Message::where('to_user_id', auth()->id())
+                    ->whereNull('read_at') ->count(); @endphp
                     <li class="nav-item mb-2">
                         <a
                             href="{{ route('chat.index') }}"
@@ -86,6 +96,31 @@
                             <i class="bi bi-people"></i> Group Chat
                         </a>
                     </li>
+                    {{-- ... other nav items ... --}}
+
+                    @role('admin')
+                    <li class="nav-item mt-3">
+                        <span class="text-white-50">Admin Panel</span>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white"
+                            href="{{ route('roles.index') }}"
+                        >
+                            <i class="bi bi-shield-lock"></i> Manage Roles
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white"
+                            href="{{ route('users.roles') }}"
+                        >
+                            <i class="bi bi-people"></i> User Roles
+                        </a>
+                    </li>
+                    @endrole
 
                     <li class="nav-item mt-4">
                         <a
