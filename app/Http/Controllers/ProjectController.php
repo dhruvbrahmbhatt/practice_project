@@ -56,4 +56,28 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
     }
+
+
+    public function show(Project $project)
+    {
+        $project->load(['tasks.tags', 'tasks.status', 'tasks.assignee']); // optional
+
+        $statuses = Status::all(); // ✅ Add this line
+
+        return view('projects.show', compact('project', 'statuses'));
+    }
+
+    public function kanban(Project $project)
+    {
+        $project->load(['tasks.status', 'tasks.tags', 'tasks.assignee']);
+        $statuses = Status::all();
+
+        // Calculate progress
+        $totalTasks = $project->tasks->count();
+        $doneStatus = Status::where('name', 'Done')->first();
+        $doneTasks = $project->tasks->where('status_id', $doneStatus?->id)->count();
+        $progress = $totalTasks > 0 ? round(($doneTasks / $totalTasks) * 100) : 0;
+
+        return view('projects.kanban', compact('project', 'statuses', 'progress'));
+    }
 }

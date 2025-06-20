@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->foreignId('created_by')->constrained('users');
-            $table->foreignId('status_id')->nullable()->constrained('statuses');
+            $table->unsignedBigInteger('status_id')->nullable();
+            // $table->foreignId('status_id')->references('id')->on('statuses')->onDelete('set null');
             $table->timestamps();
         });
     }

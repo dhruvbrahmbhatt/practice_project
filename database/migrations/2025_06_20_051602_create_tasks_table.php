@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // database/migrations/xxxx_xx_xx_create_tasks_table.php
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('status_id')->nullable()->constrained('statuses');
+            $table->unsignedBigInteger('status_id')->nullable()->constrained('statuses');
             $table->foreignId('assigned_to')->nullable()->constrained('users');
             $table->date('due_date')->nullable();
             $table->timestamps();

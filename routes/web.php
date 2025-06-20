@@ -4,6 +4,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,8 +38,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/groups/{id}', [GroupController::class, 'chat'])->name('group.chat');
     Route::post('/groups/{id}/send', [GroupController::class, 'sendMessage'])->name('group.send');
 });
+Route::middleware(['role:admin'])->group(function () {
 
-Route::resource('projects', ProjectController::class)->middleware('auth');
+    Route::resource('projects', ProjectController::class)->middleware('auth');
+});
+Route::resource('projects.tasks', TaskController::class)->shallow();
+Route::get('/projects/{project}/kanban', [ProjectController::class, 'kanban'])->name('projects.kanban');
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+// Role & Permission Management
+// all role/permission management routes
+Route::resource('roles', RoleController::class)->middleware('role:admin');
+Route::get('users/roles', [UserRoleController::class, 'index'])->name('users.roles')->middleware('role:admin');
+Route::post('users/roles/{user}', [UserRoleController::class, 'update'])->name('users.roles.update')->middleware('role:admin');
 
 
 require __DIR__ . '/auth.php';

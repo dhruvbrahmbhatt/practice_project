@@ -13,10 +13,14 @@
                     Your Profile
                 </div>
                 <div class="card-body">
-                    <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-                    <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
                     <p>
-                        <strong>Registered on:</strong>
+                        <strong>Employ Name:</strong> {{ Auth::user()->name }}
+                    </p>
+                    <p>
+                        <strong>Employ Email:</strong> {{ Auth::user()->email }}
+                    </p>
+                    <p>
+                        <strong>Joined on:</strong>
                         {{ Auth::user()->created_at->format('d M, Y') }}
                     </p>
                 </div>
