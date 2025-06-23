@@ -12,6 +12,7 @@
             rel="stylesheet"
         />
         <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/emoji-button.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <style>
             .nav-link.active {
@@ -49,6 +50,14 @@
                         </a>
                     </li>
                     @endunlessrole
+                    <li class="nav-item mb-2">
+                        <a
+                            href="{{ route('task-logs.create') }}"
+                            class="nav-link text-white {{ request()->routeIs('task-logs.*') ? 'active fw-bold' : '' }}"
+                        >
+                            <i class="bi bi-journal-text me-1"></i> Task Log
+                        </a>
+                    </li>
 
                     <li class="nav-item mb-2">
                         <a
