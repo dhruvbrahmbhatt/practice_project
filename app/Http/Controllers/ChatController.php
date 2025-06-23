@@ -12,7 +12,8 @@ class ChatController extends Controller
     public function index()
     {
         $users = User::where('id', '!=', Auth::id())->get();
-        return view('chat.index', compact('users'));
+        $groups = Auth::user()->groups; // or Group::where('...')->get();
+        return view('group.index', compact('groups', 'users'));
     }
 
     public function chatWith($userId)
@@ -62,6 +63,29 @@ class ChatController extends Controller
         ]);
 
         return redirect()->route('chat.with', $userId);
+    }
+
+    public function send(Request $request)
+    {
+        $message = $request->input('message');
+
+        // Save to DB or broadcast via WebSockets
+        // Example: Broadcast using events
+        // event(new MessageSent(auth()->user(), $message));
+
+        return response()->json(['status' => 'Message sent']);
+    }
+
+    public function getUsers()
+    {
+        $users = User::where('id', '!=', Auth::id())->get()->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'online' => $user->isOnline()
+            ];
+        });
+        return response()->json($users);
     }
 
     // public function send(Request $request, $userId)
