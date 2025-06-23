@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(\App\Models\Group::class, 'group_users');
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(\App\Models\Task::class, 'assigned_to');
+    }
 }

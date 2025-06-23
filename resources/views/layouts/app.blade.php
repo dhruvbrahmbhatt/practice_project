@@ -30,6 +30,16 @@
             >
                 <h5 class="mb-4">PMS</h5>
                 <ul class="nav flex-column">
+                    @role('admin')
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white"
+                            href="{{ route('admin.dashboard') }}"
+                        >
+                            <i class="bi bi-speedometer2"></i> Admin Dashboard
+                        </a>
+                    </li>
+                    @endrole
                     <li class="nav-item mb-2">
                         <a
                             class="nav-link text-white {{ request()->routeIs('dashboard') ? 'active fw-bold' : '' }}"
