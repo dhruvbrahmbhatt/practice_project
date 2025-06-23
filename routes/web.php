@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,8 @@ Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show')
 Route::resource('roles', RoleController::class)->middleware('role:admin');
 Route::get('users/roles', [UserRoleController::class, 'index'])->name('users.roles')->middleware('role:admin');
 Route::post('users/roles/{user}', [UserRoleController::class, 'update'])->name('users.roles.update')->middleware('role:admin');
-
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('role:admin')
+    ->name('admin.dashboard');
 
 require __DIR__ . '/auth.php';
