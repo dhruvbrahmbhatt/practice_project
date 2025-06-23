@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TaskLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -19,6 +21,14 @@ class AdminController extends Controller
             return $user;
         });
 
-        return view('admin.dashboard', compact('users'));
+        $logs = TaskLog::selectRaw('log_date, SUM(hours_spent) as total_hours')
+            ->groupBy('log_date')
+            ->orderBy('log_date')
+            ->get();
+
+        $labels = $logs->pluck('log_date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M'))->toArray();
+        $data = $logs->pluck('total_hours')->toArray();
+
+        return view('admin.dashboard', compact('users', 'labels', 'data'));
     }
 }
