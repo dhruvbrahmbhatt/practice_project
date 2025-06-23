@@ -39,7 +39,7 @@
                             <i class="bi bi-speedometer2"></i> Admin Dashboard
                         </a>
                     </li>
-                    @endrole
+                    @endrole @unlessrole('admin')
                     <li class="nav-item mb-2">
                         <a
                             class="nav-link text-white {{ request()->routeIs('dashboard') ? 'active fw-bold' : '' }}"
@@ -48,24 +48,8 @@
                             Dashboard
                         </a>
                     </li>
+                    @endunlessrole
 
-                    <li class="nav-item mb-2">
-                        <a
-                            class="nav-link text-white {{ request()->routeIs('profile.edit') ? 'active fw-bold' : '' }}"
-                            href="{{ route('profile.edit') }}"
-                        >
-                            Edit Profile
-                        </a>
-                    </li>
-
-                    <li class="nav-item mb-2">
-                        <a
-                            class="nav-link text-white {{ request()->is('change-password') ? 'active fw-bold' : '' }}"
-                            href="#change-password"
-                        >
-                            Change Password
-                        </a>
-                    </li>
                     <li class="nav-item mb-2">
                         <a
                             class="nav-link text-white {{ request()->routeIs('projects.*') ? 'active fw-bold' : '' }}"
@@ -98,14 +82,7 @@
                             @endif
                         </a>
                     </li>
-                    <li class="nav-item mb-2">
-                        <a
-                            class="nav-link text-white {{ request()->routeIs('group.index') ? 'active fw-bold' : '' }}"
-                            href="{{ route('group.index') }}"
-                        >
-                            <i class="bi bi-people"></i> Group Chat
-                        </a>
-                    </li>
+
                     {{-- ... other nav items ... --}}
 
                     @role('admin')
