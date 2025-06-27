@@ -58,7 +58,14 @@
                             <i class="bi bi-journal-text me-1"></i> Task Log
                         </a>
                     </li>
-
+                    <li class="nav-item mb-2">
+                        <a
+                            href="{{ route('task-logs.calendar') }}"
+                            class="nav-link text-white {{ request()->routeIs('task-logs.*') ? 'active fw-bold' : '' }}"
+                        >
+                            <i class="bi bi-journal-text me-1"></i> Calendar
+                        </a>
+                    </li>
                     <li class="nav-item mb-2">
                         <a
                             class="nav-link text-white {{ request()->routeIs('projects.*') ? 'active fw-bold' : '' }}"
@@ -114,6 +121,14 @@
                             href="{{ route('users.roles') }}"
                         >
                             <i class="bi bi-people"></i> User Roles
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a
+                            class="nav-link text-white"
+                            href="{{ route('invoice.create') }}"
+                        >
+                            <i class="bi bi-people"></i> Invoices
                         </a>
                     </li>
                     @endrole
