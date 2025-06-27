@@ -37,6 +37,13 @@
                     >Edit</a
                 >
             </td>
+            <td>
+                <a
+                    href="{{ route('invoice.download', $project->id) }}"
+                    class="btn btn-primary"
+                    >Generate Invoice</a
+                >
+            </td>
         </tr>
         @empty
         <tr>

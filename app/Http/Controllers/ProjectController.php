@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\Status;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -79,5 +81,13 @@ class ProjectController extends Controller
         $progress = $totalTasks > 0 ? round(($doneTasks / $totalTasks) * 100) : 0;
 
         return view('projects.kanban', compact('project', 'statuses', 'progress'));
+    }
+
+    public function downloadInvoice($id)
+    {
+        $invoice = Invoice::with('project', 'items')->findOrFail($id);
+        $pdf = Pdf::loadView('invoice.pdf', compact('invoice'));
+
+        return $pdf->download("Invoice-{$invoice->invoice_number}.pdf");
     }
 }
