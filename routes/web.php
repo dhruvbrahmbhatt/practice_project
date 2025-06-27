@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
@@ -61,5 +62,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('task-logs', TaskLogController::class)->only(['index', 'create', 'store']);
     Route::resource('tasks', TaskController::class)->middleware('auth');
 });
+Route::middleware('role:admin')->group(function () {
+    Route::get('/invoice/{id}', [ProjectController::class, 'downloadInvoice'])
+        ->name('invoice.download');
+});
+Route::get('/invoice', [InvoiceController::class, 'create'])->name('invoice.create');
+Route::post('/invoice/store', [InvoiceController::class, 'store'])->name('invoice.store');
+Route::get('/calendar', [TaskLogController::class, 'calendar'])->name('task-logs.calendar');
+Route::get('/tasks/date/{date}', [TaskLogController::class, 'listByDate'])->name('tasks.byDate');
+Route::get('/tasklog/{taskLog}/edit', [TaskLogController::class, 'edit'])->name('tasks.edit');
+Route::put('/tasklog/{taskLog}', [TaskLogController::class, 'update'])->name('tasks.update');
+
 
 require __DIR__ . '/auth.php';
