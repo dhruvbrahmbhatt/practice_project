@@ -7,7 +7,7 @@
     <div class="list-group">
         @foreach($tasks as $task)
         <div class="list-group-item">
-            <h5 class="mb-1">{{ $task->title }}</h5>
+            <h5 class="mb-1">{{ $task->task->title }}</h5>
             <p class="mb-1">{{ $task->description }}</p>
             <small class="text-muted"
                 >Hours Spent: {{ $task->hours_spent }}</small

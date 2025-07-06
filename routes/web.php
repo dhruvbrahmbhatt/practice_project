@@ -71,7 +71,7 @@ Route::post('/invoice/store', [InvoiceController::class, 'store'])->name('invoic
 Route::get('/calendar', [TaskLogController::class, 'calendar'])->name('task-logs.calendar');
 Route::get('/tasks/date/{date}', [TaskLogController::class, 'listByDate'])->name('tasks.byDate');
 Route::get('/tasklog/{taskLog}/edit', [TaskLogController::class, 'edit'])->name('tasks.edit');
-Route::put('/tasklog/{taskLog}', [TaskLogController::class, 'update'])->name('tasks.update');
+Route::put('/tasklog/{tasklog}', [TaskLogController::class, 'update'])->name('tasks.update');
 
 
 require __DIR__ . '/auth.php';

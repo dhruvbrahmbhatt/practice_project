@@ -36,6 +36,11 @@
                     class="btn btn-sm btn-warning"
                     >Edit</a
                 >
+                <a
+                    href="{{ route('projects.show', $project) }}"
+                    class="btn btn-sm btn-warning"
+                    >View</a
+                >
             </td>
         </tr>
         @empty
