@@ -68,6 +68,15 @@
                     </li>
                     <li class="nav-item mb-2">
                         <a
+                            class="nav-link text-white {{ request()->routeIs('task-logs.calendar') ? 'active fw-bold' : '' }}"
+                            href="{{ route('task-logs.calendar') }}"
+                        >
+                            <i class="bi bi-calendar3 me-1"></i> Calendar
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a
                             class="nav-link text-white {{ request()->routeIs('projects.*') ? 'active fw-bold' : '' }}"
                             href="{{ route('projects.index') }}"
                         >

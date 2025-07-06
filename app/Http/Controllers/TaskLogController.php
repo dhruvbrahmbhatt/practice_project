@@ -56,10 +56,12 @@ class TaskLogController extends Controller
                 'hours_spent' => 'required|numeric|min:0',
                 'log_date' => 'required|date',
             ]);
-
-            $tasklog->update($request->only('description', 'hours_spent', 'log_date'));
-
-            return redirect()->route('tasks.byDate', $request->log_date)
+            $tasklog->update([
+                'description' => $request->description,
+                'hours_spent' => $request->hours_spent,
+                'log_date' => $request->log_date,
+            ]);
+            return redirect()->route('tasks.byDate', ['date' => $request->log_date])
                 ->with('success', 'Task updated successfully.');
         } catch (\Exception $e) {
             dd($e->getMessage());
